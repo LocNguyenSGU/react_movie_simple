@@ -7,6 +7,7 @@ import { Outlet } from "react-router-dom";
 import Banner from "./components/banner/Banner";
 import MoviePage from "./page/MoviePage";
 import MovieDetailPage from "./page/MovieDetailPage";
+import NotFoundPage from "./page/NotFoundPage";
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
           ></Route>
           <Route path="/movies" element={<MoviePage></MoviePage>}></Route>
           <Route path="/movies/:movieID" element={<MovieDetailPage></MovieDetailPage>}></Route>
+          <Route path="*" element={<NotFoundPage></NotFoundPage>}></Route>
         </Route>
       </Routes>
     </>

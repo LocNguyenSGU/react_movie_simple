@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
-import { apiKey, fetcher } from "../config";
+import { apiKey, fetcher, tmdbAPI } from "../config";
 import { SwiperSlide, Swiper } from "swiper/react";
 import MovieCard from "../components/movie/MovieCard";
 
@@ -10,7 +10,7 @@ const MovieDetailPage = () => {
   console.log("Movie-id: ", movieID);
 
   const { data, error } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieID}?api_key=${apiKey}`,
+    tmdbAPI.getMovieDetail(movieID),
     fetcher
   );
 
@@ -30,13 +30,13 @@ const MovieDetailPage = () => {
       <div className="page-container h-[600px] relative bg-blue-400 rounded-lg">
         <img
           className="object-cover w-full h-full rounded-lg absolute top-0 left-0"
-          src={`https://image.tmdb.org/t/p/original${data.backdrop_path}`}
+          src={tmdbAPI.imgOriginal(data.backdrop_path)}
           alt={data.title}
         />
         <div className="h-[600px] inset-0 bg-black rounded-lg opacity-60"></div>
         <img
           className="object-cover w-1/2 h-1/2 absolute rounded-lg mx-auto -translate-y-2/4 translate-x-2/4"
-          src={`https://image.tmdb.org/t/p/original${data.poster_path}`}
+          src={tmdbAPI.imgOriginal(data.poster_path)}
           alt={data.title}
         />
       </div>
@@ -64,7 +64,7 @@ const MovieDetailPage = () => {
 
 function MovieVideos({ movieID }) {
   const { data, error } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieID}/videos?api_key=${apiKey}`,
+    tmdbAPI.getMovieDetailVideos(movieID),
     fetcher
   );
   console.log("data video: ", data);
@@ -104,7 +104,7 @@ function MovieVideos({ movieID }) {
 }
 function MovieRelate({movieID}) {
     const { data, error } = useSWR(
-        `https://api.themoviedb.org/3/movie/${movieID}/similar?api_key=${apiKey}`,
+        tmdbAPI.getMovieDetailSimilar(movieID),
         fetcher
       );
       console.log("data smilar: ", data);
